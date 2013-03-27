@@ -37,6 +37,7 @@ public abstract class BaseGameActivity extends Activity implements IGameInterfac
 		if(!gameLoaded) {
 			final Scene scene = onLoadScene();
 			GameView view = (GameView)findViewById(getGameViewId());
+			view.initEngine(engine);
 			engine.onLoadInit(view.getHolder(), scene);
 			onLoadComplete();
 			gameLoaded = true;

@@ -1,9 +1,10 @@
 package com.hifreshday.android.pge.entity;
 
 import com.hifreshday.android.pge.engine.handler.IUpdateHandler;
+import com.hifreshday.android.pge.input.touch.ITouch;
 import com.hifreshday.android.pge.view.IDrawable;
 
-public interface IEntity extends IDrawable, IUpdateHandler{
+public interface IEntity extends IDrawable, IUpdateHandler, ITouch{
 
 	public boolean isVisible();
 	public void setVisible(final boolean visible);

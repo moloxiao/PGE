@@ -2,9 +2,12 @@ package com.hifreshday.android.pge.entity;
 
 import java.util.ArrayList;
 
-import android.graphics.Canvas;
+import com.hifreshday.android.pge.input.touch.ITouch;
 
-public class Entity implements IEntity {
+import android.graphics.Canvas;
+import android.view.MotionEvent;
+
+public class Entity implements IEntity{
 	
 	private IEntity parent;
 	
@@ -145,6 +148,11 @@ public class Entity implements IEntity {
 			return false;
 		}
 		return this.children.remove(entity);
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		return false;
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.hifreshday.android.pge.engine;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -9,6 +10,9 @@ import com.hifreshday.android.pge.engine.handler.RunnableHandler;
 import com.hifreshday.android.pge.engine.options.EngineOptions;
 import com.hifreshday.android.pge.engine.options.EngineUtil;
 import com.hifreshday.android.pge.entity.scene.Scene;
+import com.hifreshday.android.pge.input.touch.ITouch;
+import com.hifreshday.android.pge.input.touch.controler.ITouchControler;
+import com.hifreshday.android.pge.input.touch.controler.TouchControler;
 
 public class Engine {
 	
@@ -23,6 +27,7 @@ public class Engine {
 	private SurfaceHolder surfaceHolder;
 	
 	private final RunnableHandler updateThreadRunnableHandler = new RunnableHandler();
+	
 
 	public Engine(final EngineOptions options){
 		this.options = options;
@@ -33,7 +38,6 @@ public class Engine {
 	public void onTickUpdate() throws InterruptedException{
 		
 		if(isRunning){
-			Log.i(TAG, "onTickUpdate isRunning ... ");
 			final long pNanosecondsElapsed = EngineUtil.getNanosecondsElapsed(lastTick);
 			logicUpdate(pNanosecondsElapsed);
 		}else{
@@ -45,7 +49,7 @@ public class Engine {
 		final float secondsElapsed = (float)nanosecondsElapsed / 1000000000;
 		this.lastTick += nanosecondsElapsed;
 		
-		// TODO : touch update
+		// TODO : no touch update, deal touch on touchevent
 		updateUpdateHandler(secondsElapsed);	// handler update
 		onUpdateScene(secondsElapsed);			// view update
 		
@@ -68,6 +72,7 @@ public class Engine {
 			c = surfaceHolder.lockCanvas();
 			synchronized (surfaceHolder) {
 				if (c != null) {
+					c.drawColor (Color.argb(0, 0, 0, 0));
 					draw(c, secondsElapsed);
 				}
 			}
@@ -136,8 +141,7 @@ public class Engine {
 	}
 	
 	public boolean onTouchEvent(MotionEvent event) {
-		// TODO : touch实现
-		return false;
+		return scene.onTouchEvent(event);
 	}
 
 	public Scene getScene() {

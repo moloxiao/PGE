@@ -5,11 +5,12 @@ import android.content.res.Resources;
 import com.hifreshday.android.pge.entity.scene.Scene;
 import com.hifreshday.android.pge.entity.shape.sprite.Sprite;
 import com.hifreshday.android.test.res.PicResDemo;
+import com.hifreshday.android.test.sprite.TestSprite;
 
 public class TestScene extends Scene {
 	
 	private PicResDemo picresDemo;
-	private Sprite sprite;
+	private TestSprite sprite;
 	
 	public TestScene(Resources res) {
 		
@@ -19,7 +20,8 @@ public class TestScene extends Scene {
 	@Override
 	public void onLoadResources(Resources res) {
 		picresDemo = new PicResDemo(res);
-		sprite = new Sprite(picresDemo, 50, 50, picresDemo.getDefalutBitmap().getWidth(), picresDemo.getDefalutBitmap().getHeight());
+		sprite = new TestSprite(picresDemo, 50, 50, picresDemo.getDefalutBitmap().getWidth(), picresDemo.getDefalutBitmap().getHeight());
+		registerTouch(sprite);
 		attachChild(sprite);
 	}
 
