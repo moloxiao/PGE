@@ -4,51 +4,41 @@ import com.hifreshday.android.pge.R;
 import com.hifreshday.android.pge.engine.Engine;
 import com.hifreshday.android.pge.engine.options.EngineOptions;
 import com.hifreshday.android.pge.entity.scene.Scene;
-import com.hifreshday.android.pge.entity.shape.sprite.Sprite;
-import com.hifreshday.android.pge.view.GameView;
-import com.hifreshday.android.test.res.PicResDemo;
+import com.hifreshday.android.pge.ui.activity.BaseGameActivity;
+import com.hifreshday.android.test.scene.TestScene;
 
-import android.app.Activity;
-import android.os.Bundle;
+public class TestActivity extends BaseGameActivity {
 
-public class TestActivity extends Activity {
+	@Override
+	public Engine onEngineLoaded() {
+		return new Engine(new EngineOptions());
+	}
 
-	private Engine engine;
-	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_game);
-		
-		GameView view = (GameView)findViewById(R.id.gameview);
-		
-		Scene scene = new Scene();
-		PicResDemo picresDemo = new PicResDemo(getResources());
-		Sprite sprite = new Sprite(picresDemo, 50, 50, picresDemo.getDefalutBitmap().getWidth(), picresDemo.getDefalutBitmap().getHeight());
-		scene.attachChild(sprite);
-		
-		
-		engine = new Engine(new EngineOptions(), view.getHolder(), scene);
-		view.initEngine(engine);
+	public Scene onLoadScene() {
+		return new TestScene(getResources());
 	}
-	
+
 	@Override
-	protected void onResume() {
-		super.onResume();
-		engine.onResume();
+	public void onLoadComplete() {
 	}
-	
+
 	@Override
-	protected void onPause() {
-		super.onPause();
-		engine.onPause();
+	public void onPauseGame() {
 	}
-	
-	
+
 	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		engine.onDestory();
+	public void onResumeGame() {
+	}
+
+	@Override
+	public int getLayoutResId() {
+		return R.layout.activity_game;
+	}
+
+	@Override
+	public int getGameViewId() {
+		return R.id.gameview;
 	}
 
 }

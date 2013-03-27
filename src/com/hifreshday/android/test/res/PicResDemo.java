@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 
 import com.hifreshday.android.pge.R;
+import com.hifreshday.android.pge.view.res.GameBitmapUtil;
 import com.hifreshday.android.pge.view.res.IBitmapRes;
 
 public class PicResDemo implements IBitmapRes {

@@ -1,4 +1,4 @@
-package com.hifreshday.android.test.res;
+package com.hifreshday.android.pge.view.res;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;

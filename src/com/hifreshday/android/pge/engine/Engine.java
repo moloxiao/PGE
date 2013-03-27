@@ -22,10 +22,8 @@ public class Engine {
 	
 	private SurfaceHolder surfaceHolder;
 
-	public Engine(final EngineOptions options, SurfaceHolder surfaceHolder, Scene scene){
+	public Engine(final EngineOptions options){
 		this.options = options;
-		this.surfaceHolder = surfaceHolder;
-		this.scene = scene;
 		engineThread = new EngineThread();
 		engineThread.start();
 	}
@@ -134,8 +132,9 @@ public class Engine {
 		return scene;
 	}
 
-	public void setScene(Scene scene) {
+	public void onLoadInit(SurfaceHolder surfaceHolder, Scene scene) {
 		this.scene = scene;
+		this.surfaceHolder = surfaceHolder;
 	}
 	
 	
