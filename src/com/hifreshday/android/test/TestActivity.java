@@ -16,7 +16,10 @@ public class TestActivity extends BaseGameActivity {
 
 	@Override
 	public Scene onLoadScene() {
-		return new TestScene(getResources());
+		TestScene scene = new TestScene(getResources());
+		scene.setScreenSize(800, 480);
+		scene.setBgResId(getResources(), getSceneBgResId());
+		return scene;
 	}
 
 	@Override
@@ -37,8 +40,13 @@ public class TestActivity extends BaseGameActivity {
 	}
 
 	@Override
-	public int getGameViewId() {
+	public int getGameViewResId() {
 		return R.id.gameview;
+	}
+
+	@Override
+	public int getSceneBgResId() {
+		return R.drawable.info;
 	}
 
 }

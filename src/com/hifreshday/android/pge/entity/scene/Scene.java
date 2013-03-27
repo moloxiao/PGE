@@ -1,7 +1,6 @@
 package com.hifreshday.android.pge.entity.scene;
 
 import android.content.res.Resources;
-import android.util.Log;
 import android.view.MotionEvent;
 import com.hifreshday.android.pge.entity.Entity;
 import com.hifreshday.android.pge.input.touch.ITouch;
@@ -12,6 +11,26 @@ public abstract class Scene extends Entity implements ITouch{
 	
 	private ITouchControler touchControler = new TouchControler();
 	
+	private int width ;
+	private int height ;
+	
+	public void setScreenSize(int width, int height) {
+		this.width = width;
+		this.height = height;
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+
+
+
+	public int getHeight() {
+		return height;
+	}
+
+
+
 	public abstract void onLoadResources(Resources res);
 	public abstract void onUnloadResources();
 	

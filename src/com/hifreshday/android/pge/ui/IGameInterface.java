@@ -12,6 +12,7 @@ public interface IGameInterface {
 	public void onResumeGame();
 	
 	public int getLayoutResId();
-	public int getGameViewId();
-;	
+	public int getGameViewResId();
+	
+	public int getSceneBgResId();
 }

@@ -36,7 +36,7 @@ public abstract class BaseGameActivity extends Activity implements IGameInterfac
 	private void doResume() {
 		if(!gameLoaded) {
 			final Scene scene = onLoadScene();
-			GameView view = (GameView)findViewById(getGameViewId());
+			GameView view = (GameView)findViewById(getGameViewResId());
 			view.initEngine(engine);
 			engine.onLoadInit(view.getHolder(), scene);
 			onLoadComplete();

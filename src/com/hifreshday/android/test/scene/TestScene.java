@@ -2,12 +2,13 @@ package com.hifreshday.android.test.scene;
 
 import android.content.res.Resources;
 
+import com.hifreshday.android.pge.entity.scene.BitmapBgScreen;
 import com.hifreshday.android.pge.entity.scene.Scene;
 import com.hifreshday.android.pge.entity.shape.sprite.Sprite;
 import com.hifreshday.android.test.res.PicResDemo;
 import com.hifreshday.android.test.sprite.TestSprite;
 
-public class TestScene extends Scene {
+public class TestScene extends BitmapBgScreen {
 	
 	private PicResDemo picresDemo;
 	private TestSprite sprite;
@@ -30,5 +31,6 @@ public class TestScene extends Scene {
 		picresDemo = null;
 		sprite = null;
 	}
+
 
 }
