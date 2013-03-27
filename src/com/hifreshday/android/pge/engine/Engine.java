@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
+import com.hifreshday.android.pge.engine.handler.RunnableHandler;
 import com.hifreshday.android.pge.engine.options.EngineOptions;
 import com.hifreshday.android.pge.engine.options.EngineUtil;
 import com.hifreshday.android.pge.entity.scene.Scene;
@@ -19,8 +20,9 @@ public class Engine {
 	private EngineThread engineThread;
 
 	private Scene scene;
-	
 	private SurfaceHolder surfaceHolder;
+	
+	private final RunnableHandler updateThreadRunnableHandler = new RunnableHandler();
 
 	public Engine(final EngineOptions options){
 		this.options = options;
@@ -39,24 +41,34 @@ public class Engine {
 		}
 	}
 	
-	private void logicUpdate(long pNanosecondsElapsed){
-		final float pSecondsElapsed = (float)pNanosecondsElapsed / 1000000000;
-		this.lastTick += pNanosecondsElapsed;
+	private void logicUpdate(long nanosecondsElapsed){
+		final float secondsElapsed = (float)nanosecondsElapsed / 1000000000;
+		this.lastTick += nanosecondsElapsed;
 		
 		// TODO : touch update
-		// TODO : handler update
-		scene.onUpdate(pSecondsElapsed);		// view update
+		updateUpdateHandler(secondsElapsed);	// handler update
+		onUpdateScene(secondsElapsed);			// view update
 		
-		draw(surfaceHolder, pSecondsElapsed);
+		draw(surfaceHolder, secondsElapsed);
 	}
 	
-	private void draw(SurfaceHolder surfaceHolder, float pSecondsElapsed){
+	protected void onUpdateScene(float secondsElapsed) {
+		if(scene != null) {
+			scene.onUpdate(secondsElapsed);
+		}
+	}
+	
+	protected void updateUpdateHandler(float secondsElapsed) {
+		updateThreadRunnableHandler.onUpdate(secondsElapsed);
+	}
+	
+	private void draw(SurfaceHolder surfaceHolder, float secondsElapsed){
 		Canvas c = null;
 		try {
 			c = surfaceHolder.lockCanvas();
 			synchronized (surfaceHolder) {
 				if (c != null) {
-					draw(c, pSecondsElapsed);
+					draw(c, secondsElapsed);
 				}
 			}
 		} finally {
@@ -137,5 +149,7 @@ public class Engine {
 		this.surfaceHolder = surfaceHolder;
 	}
 	
-	
+	public void runOnUpdateThread(final Runnable runnable) {
+		updateThreadRunnableHandler.postRunnable(runnable);
+	}
 }
