@@ -8,15 +8,21 @@ import com.hifreshday.android.pge.view.GameView;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 
 public abstract class BaseGameActivity extends Activity implements IGameInterface{
 
 	protected Engine engine;
 	protected boolean gameLoaded = false;
+	private int screenWidth ;
+	private int screenHeight ;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		DisplayMetrics dm = getResources().getDisplayMetrics();
+		this.screenWidth = dm.widthPixels;
+		this.screenHeight = dm.heightPixels;
 		this.engine = onEngineLoaded();
 		setContentView(getLayoutResId());
 	}
@@ -63,7 +69,13 @@ public abstract class BaseGameActivity extends Activity implements IGameInterfac
 	public EngineOptions getEngineOptions() {
 		return engine.getOptions();
 	}
-	
-	
+
+	public int getScreenWidth() {
+		return screenWidth;
+	}
+
+	public int getScreenHeight() {
+		return screenHeight;
+	}
 	
 }

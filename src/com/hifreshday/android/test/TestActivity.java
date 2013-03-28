@@ -12,8 +12,7 @@ public class TestActivity extends BaseGameActivity {
 
 	@Override
 	public Engine onEngineLoaded() {
-		DisplayMetrics dm = getResources().getDisplayMetrics();
-		return new Engine(new EngineOptions(dm.widthPixels, dm.heightPixels));
+		return new Engine(new EngineOptions(getScreenWidth(), getScreenHeight()));
 	}
 
 	@Override
