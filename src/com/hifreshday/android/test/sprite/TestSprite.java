@@ -13,19 +13,14 @@ public class TestSprite extends Sprite {
 	}
 
 	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		if(!contains((int)event.getX(), (int)event.getY())){
-			return false;
-		}
+	public boolean doOnTouchEvent(MotionEvent event) {
 		
 		if(event.getAction() == MotionEvent.ACTION_DOWN) {
 			setPosition(getX() + 10, getY() + 10);
+			setVisible(!isVisible());
 		}
 		return true;
 	}
 	
-	private boolean contains(int px, int py) {
-		
-		return true;
-	}
+	
 }

@@ -1,9 +1,6 @@
 package com.hifreshday.android.pge.entity;
 
 import java.util.ArrayList;
-
-import com.hifreshday.android.pge.input.touch.ITouch;
-
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 
@@ -23,11 +20,12 @@ public class Entity implements IEntity{
 
 	@Override
 	public void onDraw(Canvas canvas) {
-		onDrawSelf(canvas);
-		
-		if(children != null && childrenVisible) {
-			for(IEntity entity : this.children) {
-				entity.onDraw(canvas);
+		if(isVisible()) { 
+			onDrawSelf(canvas);
+			if(children != null && childrenVisible) {
+				for(IEntity entity : this.children) {
+					entity.onDraw(canvas);
+				}
 			}
 		}
 	}

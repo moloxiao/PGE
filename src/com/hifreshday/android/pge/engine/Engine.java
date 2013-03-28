@@ -5,14 +5,10 @@ import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
-
 import com.hifreshday.android.pge.engine.handler.RunnableHandler;
 import com.hifreshday.android.pge.engine.options.EngineOptions;
 import com.hifreshday.android.pge.engine.options.EngineUtil;
 import com.hifreshday.android.pge.entity.scene.Scene;
-import com.hifreshday.android.pge.input.touch.ITouch;
-import com.hifreshday.android.pge.input.touch.controler.ITouchControler;
-import com.hifreshday.android.pge.input.touch.controler.TouchControler;
 
 public class Engine {
 	
