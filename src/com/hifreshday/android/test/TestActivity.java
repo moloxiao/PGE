@@ -1,5 +1,6 @@
 package com.hifreshday.android.test;
 
+import android.util.DisplayMetrics;
 import com.hifreshday.android.pge.R;
 import com.hifreshday.android.pge.engine.Engine;
 import com.hifreshday.android.pge.engine.options.EngineOptions;
@@ -11,13 +12,14 @@ public class TestActivity extends BaseGameActivity {
 
 	@Override
 	public Engine onEngineLoaded() {
-		return new Engine(new EngineOptions());
+		DisplayMetrics dm = getResources().getDisplayMetrics();
+		return new Engine(new EngineOptions(dm.widthPixels, dm.heightPixels));
 	}
 
 	@Override
 	public Scene onLoadScene() {
 		TestScene scene = new TestScene(getResources());
-		scene.setScreenSize(800, 480);
+		scene.setScreenSize(EngineOptions.getScreenWidth(), EngineOptions.getScreenHeight());
 		scene.setBgResId(getResources(), getSceneBgResId());
 		return scene;
 	}

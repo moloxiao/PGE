@@ -1,6 +1,7 @@
 package com.hifreshday.android.pge.ui.activity;
 
 import com.hifreshday.android.pge.engine.Engine;
+import com.hifreshday.android.pge.engine.options.EngineOptions;
 import com.hifreshday.android.pge.entity.scene.Scene;
 import com.hifreshday.android.pge.ui.IGameInterface;
 import com.hifreshday.android.pge.view.GameView;
@@ -59,7 +60,9 @@ public abstract class BaseGameActivity extends Activity implements IGameInterfac
 		onPauseGame();
 	}
 	
-	
+	public EngineOptions getEngineOptions() {
+		return engine.getOptions();
+	}
 	
 	
 	

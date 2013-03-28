@@ -143,6 +143,16 @@ public class Engine {
 	public Scene getScene() {
 		return scene;
 	}
+	
+	
+
+	public EngineOptions getOptions() {
+		return options;
+	}
+
+	public void setOptions(EngineOptions options) {
+		this.options = options;
+	}
 
 	public void onLoadInit(SurfaceHolder surfaceHolder, Scene scene) {
 		this.scene = scene;

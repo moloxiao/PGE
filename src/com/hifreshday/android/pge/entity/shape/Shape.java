@@ -2,6 +2,7 @@ package com.hifreshday.android.pge.entity.shape;
 
 import android.graphics.Rect;
 import android.view.MotionEvent;
+import com.hifreshday.android.pge.engine.options.EngineOptions;
 import com.hifreshday.android.pge.entity.Entity;
 
 public abstract class Shape extends Entity implements IShape {
@@ -12,9 +13,9 @@ public abstract class Shape extends Entity implements IShape {
 	
 	public Shape(int pX, int pY, int width, int height) {
 		this.rect = new Rect();
-		this.width = width;
-		this.height = height;
-		setPosition(pX, pY);
+		this.width = (int)(width*EngineOptions.getScreenScaleX());
+		this.height = (int)(height*EngineOptions.getScreenScaleY());
+		setPosition((int)(pX*EngineOptions.getScreenScaleX()), (int)(pY*EngineOptions.getScreenScaleY()));
 	}
 	
 	@Override

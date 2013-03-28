@@ -23,13 +23,9 @@ public abstract class Scene extends Entity implements ITouch{
 		return width;
 	}
 
-
-
 	public int getHeight() {
 		return height;
 	}
-
-
 
 	public abstract void onLoadResources(Resources res);
 	public abstract void onUnloadResources();
