@@ -1,6 +1,5 @@
 package com.hifreshday.android.test.sprite;
 
-import android.util.Log;
 import android.view.MotionEvent;
 
 import com.hifreshday.android.pge.entity.shape.sprite.Sprite;
