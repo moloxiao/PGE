@@ -17,7 +17,7 @@ public class Entity implements IEntity{
 	protected boolean childrenIgnoreUpdate = false;
 	
 	private ArrayList<IEntity> children;
-
+	
 	@Override
 	public void onDraw(Canvas canvas) {
 		if(isVisible()) { 

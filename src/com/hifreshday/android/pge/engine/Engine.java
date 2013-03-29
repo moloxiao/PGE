@@ -1,7 +1,6 @@
 package com.hifreshday.android.pge.engine;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -45,7 +44,6 @@ public class Engine {
 		final float secondsElapsed = (float)nanosecondsElapsed / 1000000000;
 		this.lastTick += nanosecondsElapsed;
 		
-		// TODO : no touch update, deal touch on touchevent
 		updateUpdateHandler(secondsElapsed);	// handler update
 		onUpdateScene(secondsElapsed);			// view update
 		
@@ -61,14 +59,13 @@ public class Engine {
 	protected void updateUpdateHandler(float secondsElapsed) {
 		updateThreadRunnableHandler.onUpdate(secondsElapsed);
 	}
-	
+
 	private void draw(SurfaceHolder surfaceHolder, float secondsElapsed){
 		Canvas c = null;
 		try {
 			c = surfaceHolder.lockCanvas();
 			synchronized (surfaceHolder) {
 				if (c != null) {
-					c.drawColor (Color.argb(0, 0, 0, 0));
 					draw(c, secondsElapsed);
 				}
 			}
@@ -87,7 +84,6 @@ public class Engine {
 	
 	
 	public void onResume() {
-		start();
 	}
 	
 	public void onPause() {
@@ -98,7 +94,7 @@ public class Engine {
 		interruptUpdateThread();
 	}
 	
-	private synchronized void start() {
+	public synchronized void start() {
 		Log.i(TAG, "engine start ... ");
 		if(!this.isRunning) {
 			this.lastTick = System.nanoTime();
@@ -106,7 +102,7 @@ public class Engine {
 		}
 	}
 
-	private synchronized void stop() {
+	public synchronized void stop() {
 		Log.i(TAG, "engine stop ... ");
 		if(this.isRunning) {
 			this.isRunning = false;
@@ -120,7 +116,7 @@ public class Engine {
 	private class EngineThread extends Thread {
 		
 		public EngineThread() {
-			super("THREADNAME");
+			super("EngineThread");
 		}
 		
 		@Override
@@ -143,8 +139,6 @@ public class Engine {
 	public Scene getScene() {
 		return scene;
 	}
-	
-	
 
 	public EngineOptions getOptions() {
 		return options;
@@ -155,6 +149,7 @@ public class Engine {
 	}
 
 	public void onLoadInit(SurfaceHolder surfaceHolder, Scene scene) {
+		Log.i("MOLO_DEBUG", "surfaceholder create");
 		this.scene = scene;
 		this.surfaceHolder = surfaceHolder;
 	}

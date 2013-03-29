@@ -30,8 +30,10 @@ public class GameView extends SurfaceView implements Callback {
 		super(context, attrs, defStyle);
 		initView(context);
 	}
+	
 
 	private void initView(Context context) {
+		Log.i(TAG, "GameView init");
 		surfaceHolder = getHolder();
 		surfaceHolder.addCallback(this);
 		setLongClickable(true);
@@ -55,11 +57,13 @@ public class GameView extends SurfaceView implements Callback {
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		Log.i(TAG, "surfaceCreated(SurfaceHolder)");
+		if(engine != null)engine.start();
 	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		Log.i(TAG, "surfaceDestroyed(SurfaceHolder)");
+		if(engine != null)engine.stop();
 	}
 
 	@Override

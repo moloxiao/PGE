@@ -1,6 +1,5 @@
 package com.hifreshday.android.test;
 
-import android.util.DisplayMetrics;
 import com.hifreshday.android.pge.R;
 import com.hifreshday.android.pge.engine.Engine;
 import com.hifreshday.android.pge.engine.options.EngineOptions;
