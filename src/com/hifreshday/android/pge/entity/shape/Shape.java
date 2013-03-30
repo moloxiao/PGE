@@ -7,11 +7,20 @@ import com.hifreshday.android.pge.entity.Entity;
 
 public abstract class Shape extends Entity implements IShape {
 	
+	private int initX;
+	private int initY;
+	private int initWidth;
+	private int initHeight;
+	
 	private int width ;
 	private int height ;
 	private Rect rect;
 	
 	public Shape(int pX, int pY, int width, int height) {
+		this.initX = pX;
+		this.initY = pY;
+		this.initWidth = width;
+		this.initHeight = height;
 		this.rect = new Rect();
 		this.width = (int)(width*EngineOptions.getScreenScaleX());
 		this.height = (int)(height*EngineOptions.getScreenScaleY());
@@ -46,5 +55,21 @@ public abstract class Shape extends Entity implements IShape {
 	
 	protected boolean contains(int px, int py) {
 		return rect.contains(px, py);
+	}
+
+	public int getInitX() {
+		return initX;
+	}
+
+	public int getInitY() {
+		return initY;
+	}
+
+	public int getInitWidth() {
+		return initWidth;
+	}
+
+	public int getInitHeight() {
+		return initHeight;
 	}
 }
