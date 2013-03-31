@@ -40,16 +40,20 @@ public abstract class BaseGameActivity extends Activity implements IGameInterfac
 	
 	private void doResume() {
 		if(!gameLoaded) {
-			GameView view = (GameView)findViewById(getGameViewResId());
-			view.initEngine(engine);
-			final Scene scene = onLoadScene();
-			engine.onLoadInit(view.getHolder(), scene);
-			onLoadComplete();
-			gameLoaded = true;
+			doGameLoad();
 		}
 		
 		this.engine.onResume();
 		onResumeGame();
+	}
+	
+	protected void doGameLoad() {
+		GameView view = (GameView)findViewById(getGameViewResId());
+		view.initEngine(engine);
+		final Scene scene = onLoadScene();
+		engine.onLoadInit(view.getHolder(), scene);
+		onLoadComplete();
+		gameLoaded = true;
 	}
 	
 	@Override
@@ -74,5 +78,9 @@ public abstract class BaseGameActivity extends Activity implements IGameInterfac
 
 	public int getScreenHeight() {
 		return screenHeight;
+	}
+
+	public Engine getEngine() {
+		return engine;
 	}
 }
