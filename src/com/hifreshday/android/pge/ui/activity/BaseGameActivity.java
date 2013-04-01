@@ -41,6 +41,8 @@ public abstract class BaseGameActivity extends Activity implements IGameInterfac
 	private void doResume() {
 		if(!gameLoaded) {
 			doGameLoad();
+			onLoadComplete();
+			gameLoaded = true;
 		}
 		
 		this.engine.onResume();
@@ -52,8 +54,6 @@ public abstract class BaseGameActivity extends Activity implements IGameInterfac
 		view.initEngine(engine);
 		final Scene scene = onLoadScene();
 		engine.onLoadInit(view.getHolder(), scene);
-		onLoadComplete();
-		gameLoaded = true;
 	}
 	
 	@Override
