@@ -83,4 +83,8 @@ public abstract class BaseGameActivity extends Activity implements IGameInterfac
 	public Engine getEngine() {
 		return engine;
 	}
+	
+	public void runOnUpdate(Runnable runnable) {
+		engine.runOnUpdateThread(runnable);
+	}
 }
