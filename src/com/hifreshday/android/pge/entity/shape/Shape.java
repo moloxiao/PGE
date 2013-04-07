@@ -14,7 +14,7 @@ public abstract class Shape extends Entity implements IShape {
 	
 	private int width ;
 	private int height ;
-	private Rect rect;
+	protected Rect rect;
 	
 	public Shape(int pX, int pY, int width, int height) {
 		this.initX = pX;

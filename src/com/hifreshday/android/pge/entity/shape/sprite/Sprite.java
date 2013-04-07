@@ -17,8 +17,7 @@ public class Sprite extends Shape {
 
 	@Override
 	public void onDrawSelf(Canvas canvas) {
-		canvas.drawBitmap(bitmapRes.getDefalutBitmap(), null, 
-				new Rect(getX(), getY(), getX() + getWidth(), getY() + getHeight()), null);
+		canvas.drawBitmap(bitmapRes.getDefalutBitmap(), null, rect, null);
 	}
 
 	@Override
