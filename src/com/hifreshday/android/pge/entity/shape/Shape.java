@@ -72,4 +72,8 @@ public abstract class Shape extends Entity implements IShape {
 	public int getInitHeight() {
 		return initHeight;
 	}
+	
+	public Rect getRect() {
+		return rect;
+	}
 }
