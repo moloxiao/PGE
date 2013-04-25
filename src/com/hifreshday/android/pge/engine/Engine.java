@@ -91,6 +91,7 @@ public class Engine {
 	}
 	
 	public void onDestory() { 
+		stop();
 		interruptUpdateThread();
 	}
 	
@@ -115,6 +116,8 @@ public class Engine {
 	
 	private class EngineThread extends Thread {
 		
+		boolean interrupted = false;
+		
 		public EngineThread() {
 			super("EngineThread");
 		}
@@ -126,7 +129,12 @@ public class Engine {
 				try {
 					Engine.this.onTickUpdate();
 				} catch (final InterruptedException e) {
+					interrupted = true;
 					e.printStackTrace();
+				} finally {
+					if (interrupted) {
+			            Thread.currentThread().interrupt();
+					}
 				}
 			}
 		}
