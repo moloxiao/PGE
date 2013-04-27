@@ -5,6 +5,9 @@ public class EngineOptions {
 	public static final float DEFAULT_SCREEN_WIDTH = 800.0f;
 	public static final float DEFAULT_SCREEN_HEIGHT = 480.0f;
 	
+	public static final int GAME_SCALE_MODEL_NORMAL = 0;
+	public static final int GAME_SCALE_MODEL_KEEPWIDTHANDHEIGHT = 1;
+	
 	private static float screenScaleX = 1.0f;
 	private static float screenScaleY = 1.0f;
 	

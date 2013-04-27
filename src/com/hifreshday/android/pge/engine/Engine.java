@@ -84,15 +84,17 @@ public class Engine {
 	
 	
 	public void onResume() {
+//		start();
 	}
 	
 	public void onPause() {
-		stop();
+//		stop();
 	}
 	
 	public void onDestory() { 
 		stop();
 		interruptUpdateThread();
+		Log.i(TAG, "engine onDestory ... ");
 	}
 	
 	public synchronized void start() {
@@ -111,12 +113,15 @@ public class Engine {
 	}
 	
 	private void interruptUpdateThread() {
-		this.engineThread.interrupt();
+		if(this.engineThread != null) {
+			this.engineThread.interrupt();
+		}
 	}
 	
 	private class EngineThread extends Thread {
 		
-		boolean interrupted = false;
+		private boolean interrupted = false;
+		private volatile boolean cancel = false;
 		
 		public EngineThread() {
 			super("EngineThread");
@@ -125,7 +130,7 @@ public class Engine {
 		@Override
 		public void run() {
 			Log.i(TAG, "engine thread start ... ");
-			while(true){
+			while(!cancel){
 				try {
 					Engine.this.onTickUpdate();
 				} catch (final InterruptedException e) {
@@ -133,6 +138,7 @@ public class Engine {
 					e.printStackTrace();
 				} finally {
 					if (interrupted) {
+						cancel = true;
 			            Thread.currentThread().interrupt();
 					}
 				}
