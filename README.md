@@ -1,5 +1,5 @@
 PGE
 ===
 
-poxiao (company) android game engine(by canvas)
+pooooool game engine(on android platform), draw by canvas system
 
