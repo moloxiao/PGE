@@ -1,5 +1,7 @@
 package com.hifreshday.android.pge.engine;
 
+import java.util.ArrayList;
+import java.util.List;
 import android.graphics.Canvas;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -23,6 +25,7 @@ public class Engine {
 	
 	private final RunnableHandler updateThreadRunnableHandler = new RunnableHandler();
 	
+	private List<MotionEvent> touchEvents = new ArrayList<MotionEvent>();
 
 	public Engine(final EngineOptions options){
 		this.options = options;
@@ -44,6 +47,7 @@ public class Engine {
 		final float secondsElapsed = (float)nanosecondsElapsed / 1000000000;
 		this.lastTick += nanosecondsElapsed;
 		
+		onTouchUpdate();						// touch update
 		updateUpdateHandler(secondsElapsed);	// handler update
 		onUpdateScene(secondsElapsed);			// view update
 		
@@ -84,11 +88,9 @@ public class Engine {
 	
 	
 	public void onResume() {
-//		start();
 	}
 	
 	public void onPause() {
-//		stop();
 	}
 	
 	public void onDestory() { 
@@ -146,8 +148,46 @@ public class Engine {
 		}
 	}
 	
+	
+	private void onTouchUpdate() {
+		List<MotionEvent> bufferEvent;
+		synchronized(touchEvents){
+			bufferEvent = new ArrayList<MotionEvent>();
+			
+			for(int i=0;i<touchEvents.size();i++) {		
+				
+				bufferEvent.add(MotionEvent.obtain(
+						touchEvents.get(i).getDownTime(),
+						touchEvents.get(i).getEventTime(),
+						touchEvents.get(i).getAction(),
+						touchEvents.get(i).getX(),
+						touchEvents.get(i).getY(),
+						touchEvents.get(i).getMetaState()));
+			}
+			touchEvents.clear();
+		}
+		
+		if(bufferEvent != null) {
+			for(MotionEvent motionevent : bufferEvent) {
+				scene.onTouchEvent(motionevent);
+			}
+			bufferEvent.clear();
+			bufferEvent = null;
+		}
+	}
+	
 	public boolean onTouchEvent(MotionEvent event) {
-		return scene.onTouchEvent(event);
+		if(event.getAction() == MotionEvent.ACTION_DOWN)
+		synchronized(touchEvents){
+			 touchEvents.add(MotionEvent.obtain(
+					event.getDownTime(),
+					event.getEventTime(),
+					event.getAction(),
+					event.getX(),
+					event.getY(),
+					event.getMetaState()));
+		}
+		return true;
 	}
 
 	public Scene getScene() {

@@ -1,8 +1,6 @@
 package com.hifreshday.android.pge.input.touch.controler;
 
 import java.util.ArrayList;
-
-import android.util.Log;
 import android.view.MotionEvent;
 import com.hifreshday.android.pge.input.touch.ITouch;
 

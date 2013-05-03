@@ -68,8 +68,8 @@ public class GameView extends SurfaceView implements Callback {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if (engine != null && engine.onTouchEvent(event)) {
-			return true;
+		if (engine != null) {
+			return engine.onTouchEvent(event);
 		}
 		return super.onTouchEvent(event);
 	}
