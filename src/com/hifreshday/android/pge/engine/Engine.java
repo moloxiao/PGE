@@ -51,7 +51,7 @@ public class Engine {
 		updateUpdateHandler(secondsElapsed);	// handler update
 		onUpdateScene(secondsElapsed);			// view update
 		
-		draw(surfaceHolder, secondsElapsed);
+		onDraw(surfaceHolder, secondsElapsed);
 	}
 	
 	protected void onUpdateScene(float secondsElapsed) {
@@ -64,13 +64,13 @@ public class Engine {
 		updateThreadRunnableHandler.onUpdate(secondsElapsed);
 	}
 
-	private void draw(SurfaceHolder surfaceHolder, float secondsElapsed){
+	private void onDraw(SurfaceHolder surfaceHolder, float secondsElapsed){
 		Canvas c = null;
 		try {
 			c = surfaceHolder.lockCanvas();
 			synchronized (surfaceHolder) {
 				if (c != null) {
-					draw(c, secondsElapsed);
+					draw(c);
 				}
 			}
 		} finally {
@@ -80,12 +80,12 @@ public class Engine {
 		}
 	}
 	
-	private void draw(Canvas canvas, float pSecondsElapsed){
+	
+	private void draw(Canvas canvas){
 		if(scene != null){
 			scene.onDraw(canvas);
 		}
 	}
-	
 	
 	public void onResume() {
 	}
@@ -177,14 +177,13 @@ public class Engine {
 	}
 	
 	public boolean onTouchEvent(MotionEvent event) {
-		if(event.getAction() == MotionEvent.ACTION_DOWN)
 		synchronized(touchEvents){
 			 touchEvents.add(MotionEvent.obtain(
 					event.getDownTime(),
 					event.getEventTime(),
 					event.getAction(),
-					event.getX(),
-					event.getY(),
+					event.getX() - EngineOptions.getOffsetX(),
+					event.getY() - EngineOptions.getOffsetY(),
 					event.getMetaState()));
 		}
 		return true;

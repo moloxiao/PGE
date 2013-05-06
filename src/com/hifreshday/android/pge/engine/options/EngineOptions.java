@@ -13,11 +13,19 @@ public class EngineOptions {
 	
 	private static int screenWidth ;
 	private static int screenHeight ;
+	
+	private static int offsetX = 0;
+	private static int offsetY = 0;
+	
+	private static int realScreenWidth;
+	private static int realScreenHeight;
 
 	private GameType gameType ;
+	private static ScaleModel model;
 	
-	public EngineOptions(int screenWidth, int screenHeight){
+	public EngineOptions(int screenWidth, int screenHeight, ScaleModel model){
 		this.gameType = GameType.ONLINEGAME;
+		EngineOptions.model = model;
 		initScreenInfo(screenWidth, screenHeight);
 	}
 
@@ -26,10 +34,48 @@ public class EngineOptions {
 	}
 	
 	private void initScreenInfo(int screenWidth, int screenHeight) {
-		EngineOptions.screenWidth = screenWidth;
-		EngineOptions.screenHeight = screenHeight;
-		EngineOptions.screenScaleX = EngineOptions.screenWidth/DEFAULT_SCREEN_WIDTH;
-		EngineOptions.screenScaleY = EngineOptions.screenHeight/DEFAULT_SCREEN_HEIGHT;
+		EngineOptions.realScreenWidth = screenWidth;
+		EngineOptions.realScreenHeight = screenHeight;
+		
+		EngineOptions.screenScaleX = EngineOptions.realScreenWidth/DEFAULT_SCREEN_WIDTH;
+		EngineOptions.screenScaleY = EngineOptions.realScreenHeight/DEFAULT_SCREEN_HEIGHT;
+		
+		if(EngineOptions.model == ScaleModel.FULLSCREEN) {
+			EngineOptions.screenWidth = EngineOptions.realScreenWidth;
+			EngineOptions.screenHeight = EngineOptions.realScreenHeight;
+			return ;
+		}
+		
+		if(EngineOptions.screenScaleX == EngineOptions.screenScaleY) {
+			EngineOptions.screenWidth = EngineOptions.realScreenWidth;
+			EngineOptions.screenHeight = EngineOptions.realScreenHeight;
+		}else if(EngineOptions.screenScaleX > EngineOptions.screenScaleY) {
+			EngineOptions.screenScaleX = EngineOptions.screenScaleY;
+			EngineOptions.screenWidth = (int)(DEFAULT_SCREEN_WIDTH*EngineOptions.screenScaleX);
+			EngineOptions.offsetX = (EngineOptions.realScreenWidth - EngineOptions.screenWidth)/2;
+			EngineOptions.screenHeight = EngineOptions.realScreenHeight;
+		}else {
+			EngineOptions.screenScaleY = EngineOptions.screenScaleX;
+			EngineOptions.screenHeight = (int)(DEFAULT_SCREEN_HEIGHT*EngineOptions.screenScaleY);
+			EngineOptions.offsetY = (EngineOptions.realScreenHeight - EngineOptions.screenHeight)/2;
+			EngineOptions.screenWidth = EngineOptions.realScreenWidth;
+		}
+	}
+
+	public static int getOffsetX() {
+		return offsetX;
+	}
+
+	public static int getOffsetY() {
+		return offsetY;
+	}
+
+	public static int getRealScreenWidth() {
+		return realScreenWidth;
+	}
+
+	public static int getRealScreenHeight() {
+		return realScreenHeight;
 	}
 
 	public static float getScreenScaleX() {

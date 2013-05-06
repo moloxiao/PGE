@@ -1,5 +1,6 @@
 package com.hifreshday.android.pge.entity.scene;
 
+import com.hifreshday.android.pge.engine.options.EngineOptions;
 import com.hifreshday.android.pge.view.res.GameBitmapUtil;
 
 import android.content.res.Resources;
@@ -18,7 +19,9 @@ public abstract class BitmapBgScreen extends Scene {
 	
 	@Override
 	protected void onDrawSelf(Canvas canvas) {
-		canvas.drawBitmap(bg, null, new Rect(0, 0, getWidth(), getHeight()), null);
+		canvas.drawBitmap(bg, null, new Rect(0, 0, 
+				EngineOptions.getRealScreenWidth(), 
+				EngineOptions.getRealScreenHeight()), null);
 	}
 
 }

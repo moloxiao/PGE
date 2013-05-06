@@ -1,8 +1,15 @@
 package com.hifreshday.android.pge.entity.scene;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.graphics.Bitmap.Config;
 import android.view.MotionEvent;
+
+import com.hifreshday.android.pge.engine.options.EngineOptions;
 import com.hifreshday.android.pge.entity.Entity;
+import com.hifreshday.android.pge.entity.IEntity;
 import com.hifreshday.android.pge.input.touch.ITouch;
 import com.hifreshday.android.pge.input.touch.controler.ITouchControler;
 import com.hifreshday.android.pge.input.touch.controler.TouchControler;
@@ -41,5 +48,39 @@ public abstract class Scene extends Entity implements ITouch{
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		return touchControler.onTouchEvent(event);
+	}
+	
+	private Rect sceneRect;
+	
+	@Override
+	public void onDraw(Canvas canvas) {
+		if(isVisible()) { 
+			
+			Bitmap sceneBmp = Bitmap.createBitmap(
+					EngineOptions.getScreenWidth(),
+					EngineOptions.getScreenHeight(), 
+					Config.ARGB_8888);
+			
+			if(sceneRect == null) {
+				sceneRect = new Rect(
+						EngineOptions.getOffsetX(), 
+						EngineOptions.getOffsetY(), 
+						EngineOptions.getOffsetX() + EngineOptions.getScreenWidth(), 
+						EngineOptions.getOffsetY() + EngineOptions.getScreenHeight());
+			}
+			
+			Canvas sceneCanvas = new Canvas(sceneBmp);
+			
+			onDrawSelf(canvas);
+			if(children != null && childrenVisible) {
+				for(IEntity entity : this.children) {
+					entity.onDraw(sceneCanvas);
+				}
+			}
+			canvas.drawBitmap(sceneBmp, null, sceneRect, null);
+			
+			sceneCanvas = null;
+			sceneBmp = null;
+		}
 	}
 }
