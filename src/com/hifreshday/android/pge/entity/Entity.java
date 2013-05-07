@@ -1,6 +1,9 @@
 package com.hifreshday.android.pge.entity;
 
 import java.util.ArrayList;
+
+import com.hifreshday.android.pge.engine.options.EngineOptions;
+
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 
@@ -122,8 +125,8 @@ public class Entity implements IEntity{
 
 	@Override
 	public void setPosition(int pX, int pY) {
-		this.px = pX;
-		this.py = pY;
+		this.px = EngineOptions.getOffsetX() + pX;
+		this.py = EngineOptions.getOffsetY() + pY;
 	}
 
 	@Override
