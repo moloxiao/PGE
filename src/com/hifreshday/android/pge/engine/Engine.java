@@ -3,6 +3,8 @@ package com.hifreshday.android.pge.engine;
 import java.util.ArrayList;
 import java.util.List;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -14,6 +16,8 @@ import com.hifreshday.android.pge.entity.scene.Scene;
 public class Engine {
 	
 	private static final String TAG = "Engine";
+	
+	private boolean showFps = false;
 	
 	private EngineOptions options;
 	private long lastTick = -1;
@@ -70,7 +74,7 @@ public class Engine {
 			c = surfaceHolder.lockCanvas();
 			synchronized (surfaceHolder) {
 				if (c != null) {
-					draw(c);
+					draw(c, secondsElapsed);
 				}
 			}
 		} finally {
@@ -80,10 +84,21 @@ public class Engine {
 		}
 	}
 	
-	
-	private void draw(Canvas canvas){
+	private Paint paint ;
+	private void draw(Canvas canvas, float secondsElapsed){
 		if(scene != null){
 			scene.onDraw(canvas);
+			if(isShowFps()) {
+				if(paint == null) {
+					paint = new Paint();
+					paint.setColor(Color.WHITE);
+					paint.setStyle(Paint.Style.FILL);
+					paint.setAntiAlias(true);
+					paint.setTextSize(16);
+				}
+				int fps = 1000/((int)(secondsElapsed*1000));
+				canvas.drawText("fps=" + fps, 5, 20, paint);
+			}
 		}
 	}
 	
@@ -209,5 +224,13 @@ public class Engine {
 	
 	public void runOnUpdateThread(final Runnable runnable) {
 		updateThreadRunnableHandler.postRunnable(runnable);
+	}
+
+	public boolean isShowFps() {
+		return showFps;
+	}
+
+	public void setShowFps(boolean showFps) {
+		this.showFps = showFps;
 	}
 }
