@@ -1,5 +1,7 @@
 package com.hifreshday.android.pge.engine;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import android.graphics.Canvas;
@@ -96,8 +98,12 @@ public class Engine {
 					paint.setAntiAlias(true);
 					paint.setTextSize(16);
 				}
-				int fps = 1000/((int)(secondsElapsed*1000));
-				canvas.drawText("fps=" + fps, 5, 20, paint);
+				if(secondsElapsed != 0) {
+					float fps = 1/secondsElapsed;
+					DecimalFormat df=(DecimalFormat)NumberFormat.getInstance();
+					df.setMaximumFractionDigits(2);
+					canvas.drawText("fps=" + df.format(fps), 5, 20, paint);
+				}
 			}
 		}
 	}
