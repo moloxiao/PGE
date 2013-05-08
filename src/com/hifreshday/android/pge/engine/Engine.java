@@ -20,6 +20,7 @@ public class Engine {
 	private static final String TAG = "Engine";
 	
 	private boolean showFps = false;
+	private boolean alive = false;
 	
 	private EngineOptions options;
 	private long lastTick = -1;
@@ -36,7 +37,9 @@ public class Engine {
 	public Engine(final EngineOptions options){
 		this.options = options;
 		engineThread = new EngineThread();
+		alive = true;
 		engineThread.start();
+		
 	}
 	
 	public void onTickUpdate() throws InterruptedException{
@@ -115,9 +118,13 @@ public class Engine {
 	}
 	
 	public void onDestory() { 
-		stop();
-		interruptUpdateThread();
-		Log.i(TAG, "engine onDestory ... ");
+		if(alive) {
+			stop();
+			interruptUpdateThread();
+			scene.recycle();
+			alive = false;
+			Log.i(TAG, "engine onDestory ... ");
+		}
 	}
 	
 	public synchronized void start() {

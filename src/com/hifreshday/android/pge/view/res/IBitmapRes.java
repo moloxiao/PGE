@@ -21,4 +21,6 @@ public interface IBitmapRes {
 	
 	
 	public String getResName();
+	
+	public void recycle();
 }

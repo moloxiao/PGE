@@ -43,4 +43,5 @@ public abstract class Scene extends Entity implements ITouch{
 		return touchControler.onTouchEvent(event);
 	}
 	
+	public abstract void recycle();
 }

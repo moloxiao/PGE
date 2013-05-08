@@ -24,7 +24,7 @@ public class GameBitmapUtil {
 	 * @param bitmap
 	 */
 	public static void recycleBitmap(Bitmap bitmap) {
-		if (bitmap != null && bitmap.isRecycled()) {
+		if (bitmap != null && !bitmap.isRecycled()) {
 			bitmap.recycle();
 			bitmap = null;
 		}
