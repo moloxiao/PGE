@@ -30,7 +30,9 @@ public abstract class BaseGameActivity extends Activity implements IGameInterfac
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		engine.onDestory();
+		if(engine!=null) {
+			engine.onDestory();
+		}
 	}
 	
 	@Override

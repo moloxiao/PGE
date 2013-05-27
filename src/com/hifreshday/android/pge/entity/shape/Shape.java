@@ -45,10 +45,10 @@ public abstract class Shape extends Entity implements IShape {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if(contains((int)event.getX(), (int)event.getY())) {
+//		if(contains((int)event.getX(), (int)event.getY())) {
 			return doOnTouchEvent(event);
-		}
-		return false;
+//		}
+//		return false;
 	}
 	
 	protected abstract boolean doOnTouchEvent(MotionEvent event);

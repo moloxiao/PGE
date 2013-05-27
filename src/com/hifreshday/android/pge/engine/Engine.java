@@ -33,13 +33,14 @@ public class Engine {
 	private final RunnableHandler updateThreadRunnableHandler = new RunnableHandler();
 	
 	private List<MotionEvent> touchEvents = new ArrayList<MotionEvent>();
+	
+	public static boolean isRecycle = false;
 
 	public Engine(final EngineOptions options){
 		this.options = options;
 		engineThread = new EngineThread();
 		alive = true;
 		engineThread.start();
-		
 	}
 	
 	public void onTickUpdate() throws InterruptedException{
@@ -91,7 +92,7 @@ public class Engine {
 	
 	private Paint paint ;
 	private void draw(Canvas canvas, float secondsElapsed){
-		if(scene != null){
+		if(scene != null && !isRecycle){
 			scene.onDraw(canvas);
 			if(isShowFps()) {
 				if(paint == null) {
@@ -210,8 +211,8 @@ public class Engine {
 					event.getDownTime(),
 					event.getEventTime(),
 					event.getAction(),
-					event.getX() - EngineOptions.getOffsetX(),
-					event.getY() - EngineOptions.getOffsetY(),
+					event.getX() ,//- EngineOptions.getOffsetX()
+					event.getY(),// - EngineOptions.getOffsetY()
 					event.getMetaState()));
 		}
 		return true;
