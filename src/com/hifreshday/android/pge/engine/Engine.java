@@ -7,6 +7,8 @@ import java.util.List;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PaintFlagsDrawFilter;
+import android.graphics.PixelFormat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -16,6 +18,9 @@ import com.hifreshday.android.pge.engine.options.EngineUtil;
 import com.hifreshday.android.pge.entity.scene.Scene;
 
 public class Engine {
+	
+	public static final PaintFlagsDrawFilter FILTER = new PaintFlagsDrawFilter(0,
+			Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG); 
 	
 	private static final String TAG = "Engine";
 	
@@ -61,7 +66,7 @@ public class Engine {
 		updateUpdateHandler(secondsElapsed);	// handler update
 		onUpdateScene(secondsElapsed);			// view update
 		
-		onDraw(surfaceHolder, secondsElapsed);
+		doDraw(surfaceHolder, secondsElapsed);
 	}
 	
 	protected void onUpdateScene(float secondsElapsed) {
@@ -74,9 +79,10 @@ public class Engine {
 		updateThreadRunnableHandler.onUpdate(secondsElapsed);
 	}
 
-	private void onDraw(SurfaceHolder surfaceHolder, float secondsElapsed){
+	private void doDraw(SurfaceHolder surfaceHolder, float secondsElapsed){
 		Canvas c = null;
 		try {
+			surfaceHolder.setFormat(PixelFormat.TRANSLUCENT);
 			c = surfaceHolder.lockCanvas();
 			synchronized (surfaceHolder) {
 				if (c != null) {
@@ -93,6 +99,9 @@ public class Engine {
 	private Paint paint ;
 	private void draw(Canvas canvas, float secondsElapsed){
 		if(scene != null && !isRecycle){
+			if(options.isOpenHighQuality()) {
+				canvas.setDrawFilter(FILTER);
+			}
 			scene.onDraw(canvas);
 			if(isShowFps()) {
 				if(paint == null) {

@@ -12,16 +12,26 @@ import android.graphics.Rect;
 public abstract class BitmapBgScreen extends Scene {
 
 	private Bitmap bg;
+	private Rect bgRect;
 	
 	public void setBgResId(Resources res, int id) {
-		bg = GameBitmapUtil.loadBitmap(res, id);
+		bgRect = new Rect(0, 0, 
+				EngineOptions.getRealScreenWidth(), 
+				EngineOptions.getRealScreenHeight());
+		bg = Bitmap.createScaledBitmap(GameBitmapUtil.loadBitmap(res, id),
+				EngineOptions.getRealScreenWidth(), 
+				EngineOptions.getRealScreenHeight(), false);
 	}
 	
 	@Override
 	protected void onDrawSelf(Canvas canvas) {
-		canvas.drawBitmap(bg, null, new Rect(0, 0, 
-				EngineOptions.getRealScreenWidth(), 
-				EngineOptions.getRealScreenHeight()), null);
+		canvas.drawBitmap(bg, null, bgRect, null);
+	}
+	
+	@Override
+	public void recycle() {
+		super.recycle();
+		GameBitmapUtil.recycleBitmap(bg);
 	}
 
 }

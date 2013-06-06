@@ -3,6 +3,7 @@ package com.hifreshday.android.pge.view;
 import com.hifreshday.android.pge.engine.Engine;
 
 import android.content.Context;
+import android.graphics.PixelFormat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -16,31 +17,31 @@ public class GameView extends SurfaceView implements Callback {
 	private SurfaceHolder surfaceHolder;
 	private Engine engine;
 	
-	public GameView(Context context) {
-		super(context);
-		initView(context);
-	}
+//	public GameView(Context context) {
+//		super(context);
+//		initView(context);
+//	}
 
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		setZOrderOnTop(true);
 		initView(context);
 	}
 
-	public GameView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		initView(context);
-	}
+//	public GameView(Context context, AttributeSet attrs, int defStyle) {
+//		super(context, attrs, defStyle);
+//		initView(context);
+//	}
 	
 
 	private void initView(Context context) {
-		Log.i(TAG, "GameView init");
 		surfaceHolder = getHolder();
 		surfaceHolder.addCallback(this);
-		setLongClickable(true);
-		setFocusable(true);
-		setFocusableInTouchMode(true);
-		setKeepScreenOn(true);
-		requestFocus();
+//		setLongClickable(true);
+//		setFocusable(true);
+//		setFocusableInTouchMode(true);
+//		setKeepScreenOn(true);
+//		requestFocus();
 	}
 	
 	public void initEngine(Engine engine) {
@@ -63,7 +64,9 @@ public class GameView extends SurfaceView implements Callback {
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		Log.i(TAG, "surfaceDestroyed(SurfaceHolder)");
-		if(engine != null)engine.stop();
+		if(engine != null){
+			engine.stop();
+		}
 	}
 
 	@Override

@@ -22,9 +22,12 @@ public class EngineOptions {
 
 	private GameType gameType ;
 	private static ScaleModel model;
+	private boolean openHighQuality;
 	
-	public EngineOptions(int screenWidth, int screenHeight, ScaleModel model){
+	public EngineOptions(int screenWidth, int screenHeight, ScaleModel model,
+			boolean openHighQuality){
 		this.gameType = GameType.ONLINEGAME;
+		this.openHighQuality = openHighQuality;
 		EngineOptions.model = model;
 		initScreenInfo(screenWidth, screenHeight);
 	}
@@ -92,5 +95,9 @@ public class EngineOptions {
 
 	public static int getScreenHeight() {
 		return screenHeight;
+	}
+
+	public boolean isOpenHighQuality() {
+		return openHighQuality;
 	}
 }
