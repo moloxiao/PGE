@@ -100,4 +100,8 @@ public class EngineOptions {
 	public boolean isOpenHighQuality() {
 		return openHighQuality;
 	}
+	
+	public void closeOpenHightQuality() {
+		this.openHighQuality = false;
+	}
 }

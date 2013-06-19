@@ -22,7 +22,7 @@ public class Engine {
 	public static final PaintFlagsDrawFilter FILTER = new PaintFlagsDrawFilter(0,
 			Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG); 
 	
-	private static final String TAG = "Engine";
+	private static final String TAG = "PGE";
 	
 	private boolean showFps = false;
 	private boolean alive = false;
@@ -96,6 +96,8 @@ public class Engine {
 		}
 	}
 	
+	private static final int LEVEL_FPS = 12;
+	private int warningCount = 0;
 	private Paint paint ;
 	private void draw(Canvas canvas, float secondsElapsed){
 		if(scene != null && !isRecycle){
@@ -103,6 +105,19 @@ public class Engine {
 				canvas.setDrawFilter(FILTER);
 			}
 			scene.onDraw(canvas);
+			
+			float fps = 1/secondsElapsed;
+			if(fps < LEVEL_FPS) {
+				warningCount++;
+			}else {
+				warningCount = 0;
+			}
+			
+			if(warningCount > 20) { 
+				options.closeOpenHightQuality();
+				Log.e(TAG, "close high quality render");
+			}
+			
 			if(isShowFps()) {
 				if(paint == null) {
 					paint = new Paint();
@@ -112,7 +127,6 @@ public class Engine {
 					paint.setTextSize(16);
 				}
 				if(secondsElapsed != 0) {
-					float fps = 1/secondsElapsed;
 					DecimalFormat df=(DecimalFormat)NumberFormat.getInstance();
 					df.setMaximumFractionDigits(2);
 					canvas.drawText("fps=" + df.format(fps), 5, 20, paint);
