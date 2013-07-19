@@ -3,6 +3,7 @@ package com.hifreshday.android.pge.entity.scene;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.view.MotionEvent;
 import com.hifreshday.android.pge.entity.Entity;
@@ -37,7 +38,7 @@ public abstract class Scene extends Entity implements ITouch{
 		return height;
 	}
 
-	public abstract void onLoadResources(Resources res);
+	public abstract void onLoadResources(Resources res, AssetManager asset);
 	public abstract void onUnloadResources();
 	
 	public void registerTouch(ITouch touch) {
