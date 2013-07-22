@@ -1,5 +1,6 @@
 package com.hifreshday.android.pge.view.res;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -34,6 +35,7 @@ public class GameBitmapUtil {
         try {
             in = assets.open(fileName);
             bitmap = BitmapFactory.decodeStream(in);
+            // TODO : 考虑处理为放置默认图片
             if (bitmap == null)
                 throw new RuntimeException("Couldn't load bitmap from asset '"
                         + fileName + "'");
@@ -51,7 +53,19 @@ public class GameBitmapUtil {
         return bitmap;
 	}
 	
-	// TODO :还需要添加从外部文件读取信息的操作
+	/**
+	 * 从sd卡外部存储读取文件
+	 * @param filepath
+	 * @return
+	 */
+	public static Bitmap loadBitmap(String filepath) {
+		File file = new File(filepath);
+        if (file.exists()) {
+                return BitmapFactory.decodeFile(filepath);
+        }
+        return null;
+	}
+
 	
 	/***
 	 * 释放Bitmap所占用内存
