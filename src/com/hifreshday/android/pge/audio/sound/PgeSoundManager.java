@@ -1,0 +1,34 @@
+package com.hifreshday.android.pge.audio.sound;
+
+import com.hifreshday.android.pge.audio.sound.impl.SoundImpl;
+
+import android.media.AudioManager;
+import android.media.SoundPool;
+
+public class PgeSoundManager {
+	
+	public static final int UN_INIT_ID = -100;
+	
+	public static final int MODEL_INITFIRST = 0;
+	public static final int MODEL_INITLATER = 1;
+
+	private SoundPool soundPool;
+	private int model;
+	
+	public PgeSoundManager(int model) {
+		this.soundPool = new SoundPool(20, AudioManager.STREAM_MUSIC, 0);
+		this.model = model;
+	}
+	
+	public Sound newSound(String filename) {
+		try{
+			int soundId = UN_INIT_ID;
+			if(model == MODEL_INITFIRST){
+				soundId = soundPool.load(filename, 0);
+			}
+			return new SoundImpl(soundId, soundPool, filename);
+		}catch(Exception e) {
+			throw new RuntimeException("Couldn't load sound '" + filename + "'");
+		}
+	}
+}
