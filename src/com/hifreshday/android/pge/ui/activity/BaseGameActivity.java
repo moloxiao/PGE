@@ -19,7 +19,9 @@ public abstract class BaseGameActivity extends Activity implements IGameInterfac
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		coming();
+		if(!coming()){
+			finish();
+		}
 		setContentView(getLayoutResId());
 		DisplayMetrics dm = getResources().getDisplayMetrics();
 		this.screenWidth = dm.widthPixels;

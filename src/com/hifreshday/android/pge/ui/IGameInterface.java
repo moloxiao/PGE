@@ -5,7 +5,7 @@ import com.hifreshday.android.pge.entity.scene.Scene;
 
 public interface IGameInterface {
 
-	public void coming();
+	public boolean coming();
 	public Engine onEngineLoaded();
 	public Scene onLoadScene();
 	public void onLoadComplete();
