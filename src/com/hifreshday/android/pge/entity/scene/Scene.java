@@ -1,12 +1,10 @@
 package com.hifreshday.android.pge.entity.scene;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.view.MotionEvent;
 import com.hifreshday.android.pge.entity.Entity;
+import com.hifreshday.android.pge.entity.IEntity;
 import com.hifreshday.android.pge.entity.shape.sprite.Sprite;
 import com.hifreshday.android.pge.input.touch.ITouch;
 import com.hifreshday.android.pge.input.touch.controler.ITouchControler;
@@ -16,8 +14,6 @@ public abstract class Scene extends Entity implements ITouch{
 	
 	private ITouchControler touchControler = new TouchControler();
 	
-	protected List<Sprite> needRecycleLists = new ArrayList<Sprite>();
-	
 	private int width ;
 	private int height ;
 	
@@ -26,8 +22,9 @@ public abstract class Scene extends Entity implements ITouch{
 		this.height = height;
 	}
 	
-	public void addNeedRecyle(Sprite sprite) {
-		needRecycleLists.add(sprite);
+	@Override
+	public boolean attachChild(IEntity entity) {
+		return super.attachChild(entity);
 	}
 	
 	public int getWidth() {
@@ -55,10 +52,11 @@ public abstract class Scene extends Entity implements ITouch{
 	}
 	
 	public void recycle(){
-		if(needRecycleLists != null && needRecycleLists.size()>0) {
-			for(Sprite sprite : needRecycleLists) {
-				if(sprite.isNeedRecyle()) {
-					sprite.recycle();
+		if(children != null && children.size() > 0) {
+			for(IEntity entity : this.children) {
+				if(entity instanceof Sprite && 
+						((Sprite)entity).isNeedRecyle()) {
+					((Sprite)entity).recycle();
 				}
 			}
 		}

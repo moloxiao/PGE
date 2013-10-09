@@ -145,7 +145,9 @@ public class Engine {
 		if(alive) {
 			stop();
 			interruptUpdateThread();
-			scene.recycle();
+			if(scene != null) {
+				scene.recycle();
+			}
 			alive = false;
 			Log.i(TAG, "engine onDestory ... ");
 		}

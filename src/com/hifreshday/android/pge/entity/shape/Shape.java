@@ -24,7 +24,7 @@ public abstract class Shape extends Entity implements IShape {
 		this.rect = new Rect();
 		this.width = (int)(width*EngineOptions.getScreenScaleX());
 		this.height = (int)(height*EngineOptions.getScreenScaleY());
-		setPosition((int)(pX*EngineOptions.getScreenScaleX()), (int)(pY*EngineOptions.getScreenScaleY()));
+		setPosition(pX, pY);
 	}
 	
 	@Override

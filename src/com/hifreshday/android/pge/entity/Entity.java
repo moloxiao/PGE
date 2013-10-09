@@ -125,8 +125,8 @@ public class Entity implements IEntity{
 
 	@Override
 	public void setPosition(int pX, int pY) {
-		this.px = EngineOptions.getOffsetX() + pX;
-		this.py = EngineOptions.getOffsetY() + pY;
+		this.px = EngineOptions.getOffsetX() + (int)(pX*EngineOptions.getScreenScaleX());
+		this.py = EngineOptions.getOffsetY() + (int)(pY*EngineOptions.getScreenScaleY());
 	}
 
 	@Override
