@@ -6,6 +6,7 @@ public abstract class BaseModifier implements IModifier {
 	protected int startTime;
 	protected int duration;
 	protected IModifierListener listener;
+	protected boolean isFinished = false;
 	
 	/**
 	 * 
@@ -17,16 +18,5 @@ public abstract class BaseModifier implements IModifier {
 		this.startTime = startTime;
 		this.duration = duration;
 		this.listener = listener;
-	}
-	
-	@Override
-	public boolean isRemoveWhenFinish() {
-		return removeWhenFinish;
-	}
-
-	
-	@Override
-	public void setRemoveWhenFinish(boolean removeWhenFinish) {
-		this.removeWhenFinish = removeWhenFinish;
 	}
 }

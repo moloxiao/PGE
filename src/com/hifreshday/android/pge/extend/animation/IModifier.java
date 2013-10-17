@@ -20,15 +20,6 @@ public interface IModifier {
 	boolean isFinished();
 	
 	/**
-	 * 是否在动画播放结束时删除动画
-	 * @return
-	 */
-	boolean isRemoveWhenFinish();
-	
-	
-	void setRemoveWhenFinish(boolean removeWhenFinish);
-	
-	/**
 	 * 动画结束时的回调
 	 * @author molo
 	 *
