@@ -1,5 +1,10 @@
 package com.hifreshday.android.pge.extend.animation;
 
+/**
+ * 基本的动画抽象
+ * @author molo
+ * @since 2013-10-17
+ */
 public abstract class BaseModifier implements IModifier {
 
 	protected boolean removeWhenFinish;
@@ -7,6 +12,7 @@ public abstract class BaseModifier implements IModifier {
 	protected int duration;
 	protected IModifierListener listener;
 	protected boolean isFinished = false;
+	protected int elapsed;
 	
 	/**
 	 * 
@@ -18,5 +24,10 @@ public abstract class BaseModifier implements IModifier {
 		this.startTime = startTime;
 		this.duration = duration;
 		this.listener = listener;
+	}
+	
+	@Override
+	public boolean isFinished() {
+		return isFinished;
 	}
 }

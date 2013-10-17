@@ -1,13 +1,11 @@
 package com.hifreshday.android.pge.extend.animation;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import com.hifreshday.android.pge.extend.animation.IModifier.IModifierListener;
 
 /**
  * 用于处理多个顺序播放的动画
  * @author molo
+ * @since 2013-10-17
  *
  */
 public class BaseSequenceModifier implements IModifier {

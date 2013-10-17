@@ -2,14 +2,13 @@ package com.hifreshday.android.pge.extend.animation;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.hifreshday.android.pge.entity.shape.sprite.Sprite;
 import com.hifreshday.android.pge.view.res.IBitmapRes;
 
 /**
  * 支持动画播放的精灵类。
  * @author molo
- *
+ * @since 2013-10-17
  */
 public abstract class AnimationSprite extends Sprite {
 

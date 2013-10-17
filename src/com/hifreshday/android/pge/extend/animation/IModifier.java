@@ -1,5 +1,10 @@
 package com.hifreshday.android.pge.extend.animation;
 
+/**
+ * 动画接口
+ * @author molo
+ * @since 2013-10-17
+ */
 public interface IModifier {
 
 	/**
