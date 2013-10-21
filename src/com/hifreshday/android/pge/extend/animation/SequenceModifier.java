@@ -8,7 +8,7 @@ import java.util.List;
  * @since 2013-10-17
  *
  */
-public class BaseSequenceModifier implements IModifier {
+public class SequenceModifier implements IModifier {
 
 	private static final int NO_MODIFIER_NEED_UPDATE = -1;
 	
@@ -18,7 +18,7 @@ public class BaseSequenceModifier implements IModifier {
 	protected boolean removeWhenFinish;
 	protected boolean isFinished = false;
 	
-	public BaseSequenceModifier(List<IModifier> modifierLists) {
+	public SequenceModifier(List<IModifier> modifierLists) {
 		if(modifierLists != null && modifierLists.size() > 0 ){
 			this.modifierLists = modifierLists;
 			currentModifier = 0;
