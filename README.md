@@ -9,5 +9,5 @@ i use pge for simple android game, like poker. this game type require running on
 
 How to use pge
 --------------------------------
-
+example : https://github.com/moloxiao/MoloSudoku
 
