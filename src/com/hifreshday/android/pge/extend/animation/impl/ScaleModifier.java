@@ -8,10 +8,11 @@ import com.hifreshday.android.pge.extend.animation.BaseModifier;
  * @since 2013-10-17
  *
  */
-public abstract class ScaleModifier extends BaseModifier {
+public class ScaleModifier extends BaseModifier {
 
 	private float startScale = 0.0f;
 	private float endScale = 1.0f;
+	private GetScaleInfo info;
 	
 	/**
 	 * 
@@ -22,10 +23,11 @@ public abstract class ScaleModifier extends BaseModifier {
 	 * @param endScale 结束的缩放倍数，默认值为1.0f，注意，值必须>=0.0f
 	 */
 	public ScaleModifier(int startTime, int duration, IModifierListener listener, 
-			float startScale, float endScale) {
+			float startScale, float endScale, GetScaleInfo info) {
 		super(startTime, duration, listener);
 		this.startScale = startScale;
 		this.endScale = endScale;
+		this.info = info;
 	}
 
 	@Override
@@ -45,16 +47,24 @@ public abstract class ScaleModifier extends BaseModifier {
 			if(listener != null) {
 				listener.onModifierStoped();
 			}
-			onGetScale(endScale);
+			if(info != null) {
+				info.onGetScale(endScale);
+			}
 			return;
 		}
 
-		float per = (elapsed-startTime)/(this.duration);
+		float per = (elapsed*1.0f - startTime)/(this.duration);
 		if(per < 0 ) {
-			per = 0.0f;
+			per = startScale;
 		}
-		onGetScale(startScale + (endScale - startScale)*per );
+		if(info != null) {
+			info.onGetScale(startScale + (endScale - startScale)*per );
+		}
+		
 	}
 
-	abstract void onGetScale(float scale);
+	public interface GetScaleInfo {
+		void onGetScale(float scale);
+	}
+
 }

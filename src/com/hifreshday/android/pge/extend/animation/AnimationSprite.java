@@ -3,6 +3,7 @@ package com.hifreshday.android.pge.extend.animation;
 import java.util.ArrayList;
 import java.util.List;
 import com.hifreshday.android.pge.entity.shape.sprite.Sprite;
+import com.hifreshday.android.pge.extend.animation.impl.ScaleModifier;
 import com.hifreshday.android.pge.view.res.IBitmapRes;
 
 /**
@@ -17,6 +18,7 @@ public abstract class AnimationSprite extends Sprite {
 	public AnimationSprite(IBitmapRes bitmapRes, int pX, int pY, int width,
 			int height) {
 		super(bitmapRes, pX, pY, width, height);
+		
 	}
 
 	public void addModifier(IModifier modifier) {
