@@ -29,4 +29,7 @@ public interface IEntity extends IDrawable, IUpdateHandler, ITouch{
 	public boolean attachChild(final IEntity entity);
 	public boolean detachChild(final IEntity entity);
 	
+	public boolean isNeedRemove();
+	public void setNeedRemove(boolean remove);
+	
 }

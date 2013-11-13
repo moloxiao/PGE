@@ -14,6 +14,7 @@ public class Entity implements IEntity{
 	private int px;
 	private int py;
 	
+	protected boolean needRemove = false;
 	protected boolean visible = true;
 	protected boolean ignoreUpdate = false;
 	protected boolean childrenVisible = true;
@@ -51,9 +52,27 @@ public class Entity implements IEntity{
 			for(IEntity entity : this.children) {
 				entity.onUpdate(secondsElapsed);
 			}
+			detachChilds();
 		}
+		
 	}
 	
+	private void detachChilds() {
+		ArrayList<IEntity> buffer = new ArrayList<IEntity>();
+		boolean needDo = false;
+		for(IEntity entity : children) {
+			if(entity.isNeedRemove()) {
+				buffer.add(entity);
+				needDo = true;
+			}
+		}
+		if(needDo) {
+			for(IEntity entity : buffer) {
+				this.children.remove(entity);
+			}
+		}
+	}
+
 	protected void onUpdateSelf(final float secondsElapsed) {
 		// child need rewrite this method if need update
 	}
@@ -148,12 +167,23 @@ public class Entity implements IEntity{
 		if(children == null || entity == null){
 			return false;
 		}
-		return this.children.remove(entity);
+		entity.setNeedRemove(true);
+		return true;
 	}
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		return false;
+	}
+
+	@Override
+	public boolean isNeedRemove() {
+		return needRemove;
+	}
+
+	@Override
+	public void setNeedRemove(boolean remove) {
+		needRemove = remove;
 	}
 
 }
