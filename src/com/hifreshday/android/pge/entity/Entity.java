@@ -1,15 +1,16 @@
 package com.hifreshday.android.pge.entity;
 
 import java.util.ArrayList;
-
-import com.hifreshday.android.pge.engine.handler.IFixUpdateHandler;
 import com.hifreshday.android.pge.engine.options.EngineOptions;
+import com.hifreshday.android.pge.physics.IPhysicsManager;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 
 public class Entity implements IEntity {
 
+	public static IPhysicsManager physicsManager;
+	
 	private IEntity parent;
 
 	private int px;
@@ -21,7 +22,6 @@ public class Entity implements IEntity {
 	protected boolean childrenVisible = true;
 	protected boolean childrenIgnoreUpdate = false;
 	private boolean needFixUpdate = false;
-	private boolean childNeedFixUpdate = false;
 
 	protected ArrayList<IEntity> children;
 
@@ -41,32 +41,12 @@ public class Entity implements IEntity {
 		// child need rewrite this method if need draw
 	}
 
-	private float bufferFixTime = 0.0f;
+	
 
 	@Override
 	public void onUpdate(final float secondsElapsed) {
 		if (!ignoreUpdate) {
-			if (isNeedFixUpdate()) {
-				bufferFixTime += secondsElapsed;
-				while (bufferFixTime >= 1 / IFixUpdateHandler.FIX_STEP) {
-					bufferFixTime -= 1 / IFixUpdateHandler.FIX_STEP;
-					onManagerFixUpdate();
-				}
-			}
 			onManageUpdate(secondsElapsed);
-		}
-	}
-
-	protected void onManagerFixUpdate() {
-		if (isNeedFixUpdate()) {
-			onFixUpdate();
-		}
-		if (children != null && !childrenIgnoreUpdate) {
-			for (IEntity entity : this.children) {
-				if (entity.isChildNeedFixUpdate()) {
-					entity.onFixUpdate();
-				}
-			}
 		}
 	}
 
@@ -185,8 +165,8 @@ public class Entity implements IEntity {
 		}
 		children.add(entity);
 		entity.setParent(this);
-		if (entity.isNeedFixUpdate()) {
-			setNeedFixUpdate(true);
+		if(isNeedFixUpdate()) {
+			Entity.physicsManager.attachChild(entity);
 		}
 		return true;
 	}
@@ -228,17 +208,6 @@ public class Entity implements IEntity {
 	@Override
 	public void setNeedFixUpdate(boolean needFixUpdate) {
 		this.needFixUpdate = needFixUpdate;
-	}
-
-	@Override
-	public boolean isChildNeedFixUpdate() {
-		return childNeedFixUpdate;
-	}
-
-	@Override
-	public void setChildNeedFixUpdate(boolean childNeedFixUpdate) {
-		this.childNeedFixUpdate = childNeedFixUpdate;
-
 	}
 
 }

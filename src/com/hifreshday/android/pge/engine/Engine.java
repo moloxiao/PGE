@@ -12,12 +12,16 @@ import android.graphics.PixelFormat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
+import com.hifreshday.android.pge.engine.handler.IFixUpdateHandler;
 import com.hifreshday.android.pge.engine.handler.RunnableHandler;
 import com.hifreshday.android.pge.engine.options.EngineOptions;
 import com.hifreshday.android.pge.engine.options.EngineUtil;
+import com.hifreshday.android.pge.entity.Entity;
+import com.hifreshday.android.pge.entity.IEntity;
 import com.hifreshday.android.pge.entity.scene.Scene;
+import com.hifreshday.android.pge.physics.IPhysicsManager;
 
-public class Engine {
+public class Engine implements IPhysicsManager{
 	
 	public static final PaintFlagsDrawFilter FILTER = new PaintFlagsDrawFilter(0,
 			Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG); 
@@ -45,6 +49,7 @@ public class Engine {
 		this.options = options;
 		engineThread = new EngineThread();
 		alive = true;
+		Entity.physicsManager = this;
 		engineThread.start();
 	}
 	
@@ -64,11 +69,66 @@ public class Engine {
 		
 		onTouchUpdate();						// touch update
 		updateUpdateHandler(secondsElapsed);	// handler update
+		updateFixUpdate(secondsElapsed);
 		onUpdateScene(secondsElapsed);			// view update
 		
 		doDraw(surfaceHolder, secondsElapsed);
 	}
 	
+	private float bufferFixTime = 0.0f;
+	
+	private void updateFixUpdate(float secondsElapsed) {
+		if (true) {
+			bufferFixTime += secondsElapsed;
+			while (bufferFixTime >= 1 / IFixUpdateHandler.FIX_STEP) {
+				bufferFixTime -= 1 / IFixUpdateHandler.FIX_STEP;
+				onManagerFixUpdate();
+			}
+		}
+	}
+	
+	protected void onManagerFixUpdate() {
+		if (fixUpdateChildren != null) {
+			for (IFixUpdateHandler fixUpdateEntity : this.fixUpdateChildren) {
+				fixUpdateEntity.onFixUpdate();
+			}
+		}
+		detachChilds();
+	}
+	
+	protected ArrayList<IEntity> fixUpdateChildren;
+	
+	@Override
+	public boolean attachChild(final IEntity fixUpdateEntity){
+		if (fixUpdateEntity == null) {
+			return false;
+		}
+		if (fixUpdateChildren == null) {
+			fixUpdateChildren = new ArrayList<IEntity>();
+		}
+		fixUpdateChildren.add(fixUpdateEntity);
+	
+		return true;
+	}
+
+	public boolean detachChilds(){
+		ArrayList<IEntity> buffer = new ArrayList<IEntity>();
+		boolean needDo = false;
+		for (IEntity entity : fixUpdateChildren) {
+			if (entity.isNeedRemove()) {
+				buffer.add(entity);
+				needDo = true;
+			}
+		}
+		if (needDo) {
+			for (IEntity entity : buffer) {
+				this.fixUpdateChildren.remove(entity);
+			}
+			return true;
+		}
+		return false;
+	}
+
 	protected void onUpdateScene(float secondsElapsed) {
 		if(scene != null) {
 			scene.onUpdate(secondsElapsed);
