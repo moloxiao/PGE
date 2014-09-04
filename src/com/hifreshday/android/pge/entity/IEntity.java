@@ -1,10 +1,11 @@
 package com.hifreshday.android.pge.entity;
 
+import com.hifreshday.android.pge.engine.handler.IFixUpdateHandler;
 import com.hifreshday.android.pge.engine.handler.IUpdateHandler;
 import com.hifreshday.android.pge.input.touch.ITouch;
 import com.hifreshday.android.pge.view.IDrawable;
 
-public interface IEntity extends IDrawable, IUpdateHandler, ITouch{
+public interface IEntity extends IDrawable, IUpdateHandler, ITouch, IFixUpdateHandler{
 
 	public boolean isVisible();
 	public void setVisible(final boolean visible);
@@ -31,5 +32,8 @@ public interface IEntity extends IDrawable, IUpdateHandler, ITouch{
 	
 	public boolean isNeedRemove();
 	public void setNeedRemove(boolean remove);
+	
+	public boolean isNeedFixUpdate();
+	public void setNeedFixUpdate(boolean needFixUpdate);
 	
 }

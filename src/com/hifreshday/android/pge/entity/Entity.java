@@ -2,6 +2,7 @@ package com.hifreshday.android.pge.entity;
 
 import java.util.ArrayList;
 
+import com.hifreshday.android.pge.engine.handler.IFixUpdateHandler;
 import com.hifreshday.android.pge.engine.options.EngineOptions;
 
 import android.graphics.Canvas;
@@ -19,6 +20,7 @@ public class Entity implements IEntity{
 	protected boolean ignoreUpdate = false;
 	protected boolean childrenVisible = true;
 	protected boolean childrenIgnoreUpdate = false;
+	private boolean needFixUpdate = false;
 	
 	protected ArrayList<IEntity> children;
 	
@@ -38,10 +40,30 @@ public class Entity implements IEntity{
 		// child need rewrite this method if need draw
 	}
 
+	private float bufferFixTime = 0.0f;
+	
 	@Override
 	public void onUpdate(final float secondsElapsed) {
 		if(!ignoreUpdate) {
+			if(isNeedFixUpdate()) {
+				bufferFixTime += secondsElapsed;
+				while(bufferFixTime >= 1/IFixUpdateHandler.FIX_STEP) {
+					bufferFixTime -= 1/IFixUpdateHandler.FIX_STEP;
+					onManagerFixUpdate();
+				}
+			}
 			onManageUpdate(secondsElapsed);
+		}
+	}
+	
+	protected void onManagerFixUpdate() {
+		onFixUpdate();
+		if(children != null && !childrenIgnoreUpdate) {
+			for(IEntity entity : this.children) {
+				if(entity.isNeedFixUpdate()) {
+					entity.onFixUpdate();
+				}
+			}
 		}
 	}
 	
@@ -158,6 +180,9 @@ public class Entity implements IEntity{
 		}
 		children.add(entity);
 		entity.setParent(this);
+		if(entity.isNeedFixUpdate()) {
+			setNeedFixUpdate(true);
+		}
 		return true;
 	}
 	
@@ -184,6 +209,21 @@ public class Entity implements IEntity{
 	@Override
 	public void setNeedRemove(boolean remove) {
 		needRemove = remove;
+	}
+
+	@Override
+	public void onFixUpdate() {
+		// 需要重载,处理玩家物理模拟的行为
+	}
+
+	@Override
+	public boolean isNeedFixUpdate() {
+		return needFixUpdate;
+	}
+
+	@Override
+	public void setNeedFixUpdate(boolean needFixUpdate) {
+		this.needFixUpdate = needFixUpdate;
 	}
 
 }
