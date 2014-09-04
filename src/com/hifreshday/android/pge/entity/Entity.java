@@ -58,7 +58,7 @@ public class Entity implements IEntity {
 	}
 
 	protected void onManagerFixUpdate() {
-		if (this.isNeedFixUpdate()) {
+		if (isNeedFixUpdate()) {
 			onFixUpdate();
 		}
 		if (children != null && !childrenIgnoreUpdate) {
