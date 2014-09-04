@@ -112,20 +112,23 @@ public class Engine implements IPhysicsManager{
 	}
 
 	public boolean detachChilds(){
-		ArrayList<IEntity> buffer = new ArrayList<IEntity>();
-		boolean needDo = false;
-		for (IEntity entity : fixUpdateChildren) {
-			if (entity.isNeedRemove()) {
-				buffer.add(entity);
-				needDo = true;
+		if(fixUpdateChildren != null) {
+			ArrayList<IEntity> buffer = new ArrayList<IEntity>();
+			boolean needDo = false;
+			for (IEntity entity : fixUpdateChildren) {
+				if (entity.isNeedRemove()) {
+					buffer.add(entity);
+					needDo = true;
+				}
+			}
+			if (needDo) {
+				for (IEntity entity : buffer) {
+					this.fixUpdateChildren.remove(entity);
+				}
+				return true;
 			}
 		}
-		if (needDo) {
-			for (IEntity entity : buffer) {
-				this.fixUpdateChildren.remove(entity);
-			}
-			return true;
-		}
+		
 		return false;
 	}
 
