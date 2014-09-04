@@ -36,4 +36,7 @@ public interface IEntity extends IDrawable, IUpdateHandler, ITouch, IFixUpdateHa
 	public boolean isNeedFixUpdate();
 	public void setNeedFixUpdate(boolean needFixUpdate);
 	
+	public boolean isChildNeedFixUpdate();
+	public void setChildNeedFixUpdate(boolean childNeedFixUpdate);
+	
 }
