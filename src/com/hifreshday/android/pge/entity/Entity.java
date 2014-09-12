@@ -3,6 +3,7 @@ package com.hifreshday.android.pge.entity;
 import java.util.ArrayList;
 import com.hifreshday.android.pge.engine.options.EngineOptions;
 import com.hifreshday.android.pge.physics.IPhysicsManager;
+import com.hifreshday.android.pge.physics.PhysicsSprite;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
@@ -10,7 +11,7 @@ import android.view.MotionEvent;
 public class Entity implements IEntity {
 
 	public static IPhysicsManager physicsManager;
-	
+
 	private IEntity parent;
 
 	private int px;
@@ -21,7 +22,6 @@ public class Entity implements IEntity {
 	protected boolean ignoreUpdate = false;
 	protected boolean childrenVisible = true;
 	protected boolean childrenIgnoreUpdate = false;
-	private boolean needFixUpdate = false;
 
 	protected ArrayList<IEntity> children;
 
@@ -40,8 +40,6 @@ public class Entity implements IEntity {
 	protected void onDrawSelf(Canvas canvas) {
 		// child need rewrite this method if need draw
 	}
-
-	
 
 	@Override
 	public void onUpdate(final float secondsElapsed) {
@@ -165,7 +163,7 @@ public class Entity implements IEntity {
 		}
 		children.add(entity);
 		entity.setParent(this);
-		if(isNeedFixUpdate()) {
+		if (entity instanceof PhysicsSprite) {
 			Entity.physicsManager.attachChild(entity);
 		}
 		return true;
@@ -199,15 +197,4 @@ public class Entity implements IEntity {
 	public void onFixUpdate() {
 		// 需要重载,处理玩家物理模拟的行为
 	}
-
-	@Override
-	public boolean isNeedFixUpdate() {
-		return needFixUpdate;
-	}
-
-	@Override
-	public void setNeedFixUpdate(boolean needFixUpdate) {
-		this.needFixUpdate = needFixUpdate;
-	}
-
 }

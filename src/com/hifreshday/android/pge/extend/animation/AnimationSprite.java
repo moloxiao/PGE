@@ -3,7 +3,6 @@ package com.hifreshday.android.pge.extend.animation;
 import java.util.ArrayList;
 import java.util.List;
 import com.hifreshday.android.pge.entity.shape.sprite.Sprite;
-import com.hifreshday.android.pge.extend.animation.impl.ScaleModifier;
 import com.hifreshday.android.pge.view.res.IBitmapRes;
 
 /**

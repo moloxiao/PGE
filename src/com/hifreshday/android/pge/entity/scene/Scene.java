@@ -3,8 +3,6 @@ package com.hifreshday.android.pge.entity.scene;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.view.MotionEvent;
-
-import com.hifreshday.android.pge.engine.handler.IFixUpdateHandler;
 import com.hifreshday.android.pge.entity.Entity;
 import com.hifreshday.android.pge.entity.IEntity;
 import com.hifreshday.android.pge.entity.shape.sprite.Sprite;
