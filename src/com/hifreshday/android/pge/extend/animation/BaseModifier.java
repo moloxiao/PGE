@@ -16,7 +16,7 @@ public abstract class BaseModifier implements IModifier {
 	
 	/**
 	 * 
-	 * @param startTime 动画开始播放的时间。单位毫秒。如果立即播放则填写0.2秒后播放填写2000.
+	 * @param startTime 动画开始播放的时间。单位毫秒。如果立即播放则填写0。2秒后播放填写2000。
 	 * @param duration 动画持续时间。单位毫秒。
 	 * @param listener
 	 */
